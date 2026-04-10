@@ -10,11 +10,14 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class SpleefArenaState {
 
     private final GameContext<Player, Location, World, Material, ItemStack, Sound, Block, Entity> context;
+    private final Set<UUID> eliminatedPlayers = ConcurrentHashMap.newKeySet();
     private boolean ended;
     private UUID winner;
 
@@ -24,6 +27,10 @@ public class SpleefArenaState {
 
     public GameContext<Player, Location, World, Material, ItemStack, Sound, Block, Entity> getContext() {
         return context;
+    }
+
+    public Set<UUID> getEliminatedPlayers() {
+        return eliminatedPlayers;
     }
 
     public boolean isEnded() {

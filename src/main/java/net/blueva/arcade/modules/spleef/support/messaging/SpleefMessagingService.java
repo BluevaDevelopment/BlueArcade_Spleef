@@ -91,6 +91,11 @@ public class SpleefMessagingService {
 
     public void broadcastElimination(GameContext<Player, Location, World, Material, ItemStack, Sound, Block, Entity> context,
                                      Player victim) {
+        // Don't broadcast death messages for spectators
+        if (context.getSpectators().contains(victim)) {
+            return;
+        }
+
         String message = getRandomMessage("messages.deaths.generic");
         if (message == null) {
             return;

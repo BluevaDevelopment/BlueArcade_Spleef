@@ -24,6 +24,11 @@ vote_menu:
     - "<white>{votes}</white> <gray>votes.</gray>"
 
 stats:
+
+  descriptions:
+    wins: "Spleef wins"
+    games_played: "Spleef games played"
+    snow_blocks_broken: "Snow blocks removed"
   labels:
     snow_blocks_broken: "Snow blocks broken"
     games_played: "Spleef games played"

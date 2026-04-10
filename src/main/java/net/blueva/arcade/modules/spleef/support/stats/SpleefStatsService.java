@@ -4,6 +4,7 @@ import net.blueva.arcade.api.module.ModuleInfo;
 import net.blueva.arcade.api.stats.StatDefinition;
 import net.blueva.arcade.api.stats.StatScope;
 import net.blueva.arcade.api.stats.StatsAPI;
+import net.blueva.arcade.api.config.ModuleConfigAPI;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
@@ -12,10 +13,12 @@ public class SpleefStatsService {
 
     private final StatsAPI statsAPI;
     private final ModuleInfo moduleInfo;
+    private final ModuleConfigAPI moduleConfig;
 
-    public SpleefStatsService(StatsAPI statsAPI, ModuleInfo moduleInfo) {
+    public SpleefStatsService(StatsAPI statsAPI, ModuleInfo moduleInfo, ModuleConfigAPI moduleConfig) {
         this.statsAPI = statsAPI;
         this.moduleInfo = moduleInfo;
+        this.moduleConfig = moduleConfig;
     }
 
     public void registerStats() {
@@ -24,11 +27,11 @@ public class SpleefStatsService {
         }
 
         statsAPI.registerModuleStat(moduleInfo.getId(),
-                new StatDefinition("wins", "Wins", "Spleef wins", StatScope.MODULE));
+                new StatDefinition("wins", moduleConfig.getStringFrom("language.yml", "stats.labels.wins", "Wins"), moduleConfig.getStringFrom("language.yml", "stats.descriptions.wins", "Spleef wins"), StatScope.MODULE));
         statsAPI.registerModuleStat(moduleInfo.getId(),
-                new StatDefinition("games_played", "Games Played", "Spleef games played", StatScope.MODULE));
+                new StatDefinition("games_played", moduleConfig.getStringFrom("language.yml", "stats.labels.games_played", "Games Played"), moduleConfig.getStringFrom("language.yml", "stats.descriptions.games_played", "Spleef games played"), StatScope.MODULE));
         statsAPI.registerModuleStat(moduleInfo.getId(),
-                new StatDefinition("snow_blocks_broken", "Snow blocks broken", "Snow blocks removed", StatScope.MODULE));
+                new StatDefinition("snow_blocks_broken", moduleConfig.getStringFrom("language.yml", "stats.labels.snow_blocks_broken", "Snow blocks broken"), moduleConfig.getStringFrom("language.yml", "stats.descriptions.snow_blocks_broken", "Snow blocks removed"), StatScope.MODULE));
     }
 
     public void recordSnowBreak(Player player) {

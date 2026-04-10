@@ -1,12 +1,12 @@
 name: Spleef
 id: spleef
-version: 1.0.0
+version: ${revision}
 type: MICROGAME
-api-version: 1.0
+api-version: 3.3
 main: net.blueva.arcade.modules.spleef.SpleefModule
 
 authors:
   - Blueva
   - Whiron
 
-description: "Classic Spleef minigame - break the floor and be the last standing!"
+description: "Break the floor and be the last standing!"

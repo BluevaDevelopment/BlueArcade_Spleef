@@ -50,7 +50,7 @@ public class SpleefModule implements GameModule<Player, Location, World, Materia
         VoteMenuAPI voteMenu = ModuleAPI.getVoteMenuAPI();
         AchievementsAPI achievementsAPI = ModuleAPI.getAchievementsAPI();
 
-        statsService = new SpleefStatsService(statsAPI, moduleInfo);
+        statsService = new SpleefStatsService(statsAPI, moduleInfo, moduleConfig);
         statsService.registerStats();
 
         moduleConfig.register("language.yml", 1);

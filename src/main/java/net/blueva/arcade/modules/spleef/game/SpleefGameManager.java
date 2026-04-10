@@ -5,6 +5,7 @@ import net.blueva.arcade.api.config.ModuleConfigAPI;
 import net.blueva.arcade.api.game.GameContext;
 import net.blueva.arcade.api.module.ModuleInfo;
 import net.blueva.arcade.modules.spleef.state.SpleefStateRegistry;
+import net.blueva.arcade.modules.spleef.state.SpleefArenaState;
 import net.blueva.arcade.modules.spleef.support.loadout.SpleefLoadoutService;
 import net.blueva.arcade.modules.spleef.support.messaging.SpleefMessagingService;
 import net.blueva.arcade.modules.spleef.support.stats.SpleefStatsService;
@@ -180,6 +181,16 @@ public class SpleefGameManager {
     public void handlePlayerElimination(Player player) {
         GameContext<Player, Location, World, Material, ItemStack, Sound, Block, Entity> context = getGameContext(player);
         if (context == null) {
+            return;
+        }
+
+        // Don't eliminate spectators
+        if (context.getSpectators().contains(player)) {
+            return;
+        }
+
+        SpleefArenaState state = stateRegistry.getArenaState(context.getArenaId());
+        if (state == null || !state.getEliminatedPlayers().add(player.getUniqueId())) {
             return;
         }
 

@@ -34,6 +34,10 @@ public class SpleefStateRegistry {
         return state != null ? state.getContext() : null;
     }
 
+    public SpleefArenaState getArenaState(int arenaId) {
+        return arenas.get(arenaId);
+    }
+
     public boolean isEnded(int arenaId) {
         SpleefArenaState state = arenas.get(arenaId);
         return state != null && state.isEnded();
