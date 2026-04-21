@@ -17,7 +17,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.inventory.CraftItemEvent;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
@@ -65,6 +69,64 @@ public class SpleefListener implements Listener {
         if (event.getTo().getY() < minY - 1) {
             gameManager.handlePlayerElimination(player);
         }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onBlockPlace(BlockPlaceEvent event) {
+        Player player = event.getPlayer();
+        GameContext<Player, Location, World, Material, ItemStack, Sound, Block, Entity> context =
+                gameManager.getGameContext(player);
+
+        if (context == null || !context.isPlayerPlaying(player)) {
+            return;
+        }
+
+        event.setCancelled(true);
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onPrepareItemCraft(PrepareItemCraftEvent event) {
+        if (!(event.getView().getPlayer() instanceof Player player)) {
+            return;
+        }
+
+        GameContext<Player, Location, World, Material, ItemStack, Sound, Block, Entity> context =
+                gameManager.getGameContext(player);
+
+        if (context == null || !context.isPlayerPlaying(player)) {
+            return;
+        }
+
+        event.getInventory().setResult(new ItemStack(Material.AIR));
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onCraftItem(CraftItemEvent event) {
+        if (!(event.getWhoClicked() instanceof Player player)) {
+            return;
+        }
+
+        GameContext<Player, Location, World, Material, ItemStack, Sound, Block, Entity> context =
+                gameManager.getGameContext(player);
+
+        if (context == null || !context.isPlayerPlaying(player)) {
+            return;
+        }
+
+        event.setCancelled(true);
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onPlayerDropItem(PlayerDropItemEvent event) {
+        Player player = event.getPlayer();
+        GameContext<Player, Location, World, Material, ItemStack, Sound, Block, Entity> context =
+                gameManager.getGameContext(player);
+
+        if (context == null || !context.isPlayerPlaying(player)) {
+            return;
+        }
+
+        event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
