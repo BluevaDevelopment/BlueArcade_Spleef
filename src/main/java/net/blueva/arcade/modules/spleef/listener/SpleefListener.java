@@ -18,6 +18,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
@@ -203,5 +204,25 @@ public class SpleefListener implements Listener {
                 target.setVelocity(target.getVelocity().add(push));
             }
         }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onPlayerFallDamage(EntityDamageEvent event) {
+        if (!(event.getEntity() instanceof Player player)) {
+            return;
+        }
+
+        if (event.getCause() != EntityDamageEvent.DamageCause.FALL) {
+            return;
+        }
+
+        GameContext<Player, Location, World, Material, ItemStack, Sound, Block, Entity> context =
+                gameManager.getGameContext(player);
+
+        if (context == null || !context.isPlayerPlaying(player) || context.getPhase() != GamePhase.PLAYING) {
+            return;
+        }
+
+        event.setCancelled(true);
     }
 }
