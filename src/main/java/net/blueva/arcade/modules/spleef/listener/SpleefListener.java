@@ -86,7 +86,19 @@ public class SpleefListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPrepareItemCraft(PrepareItemCraftEvent event) {
-        if (!(event.getView().getPlayer() instanceof Player player)) {
+        Player player = null;
+
+        var holder = event.getInventory().getHolder();
+        if (holder instanceof Player p) {
+            player = p;
+        } else {
+            var viewers = event.getInventory().getViewers();
+            if (!viewers.isEmpty() && viewers.get(0) instanceof Player p) {
+                player = p;
+            }
+        }
+
+        if (player == null) {
             return;
         }
 
