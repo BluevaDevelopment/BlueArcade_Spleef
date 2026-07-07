@@ -27,11 +27,11 @@ public class SpleefStatsService {
         }
 
         statsAPI.registerModuleStat(moduleInfo.getId(),
-                new StatDefinition("wins", moduleConfig.getStringFrom("language.yml", "stats.labels.wins", "Wins"), moduleConfig.getStringFrom("language.yml", "stats.descriptions.wins", "Spleef wins"), StatScope.MODULE));
+                new StatDefinition("wins", moduleConfig.getTranslation(null, "stats.labels.wins"), moduleConfig.getTranslation(null, "stats.descriptions.wins"), StatScope.MODULE));
         statsAPI.registerModuleStat(moduleInfo.getId(),
-                new StatDefinition("games_played", moduleConfig.getStringFrom("language.yml", "stats.labels.games_played", "Games Played"), moduleConfig.getStringFrom("language.yml", "stats.descriptions.games_played", "Spleef games played"), StatScope.MODULE));
+                new StatDefinition("games_played", moduleConfig.getTranslation(null, "stats.labels.games_played"), moduleConfig.getTranslation(null, "stats.descriptions.games_played"), StatScope.MODULE));
         statsAPI.registerModuleStat(moduleInfo.getId(),
-                new StatDefinition("snow_blocks_broken", moduleConfig.getStringFrom("language.yml", "stats.labels.snow_blocks_broken", "Snow blocks broken"), moduleConfig.getStringFrom("language.yml", "stats.descriptions.snow_blocks_broken", "Snow blocks removed"), StatScope.MODULE));
+                new StatDefinition("snow_blocks_broken", moduleConfig.getTranslation(null, "stats.labels.snow_blocks_broken"), moduleConfig.getTranslation(null, "stats.descriptions.snow_blocks_broken"), StatScope.MODULE));
     }
 
     public void recordSnowBreak(Player player) {
