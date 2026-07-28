@@ -48,7 +48,6 @@ public class SpleefStatsService {
         }
 
         statsAPI.addModuleStat(player, moduleInfo.getId(), "wins", 1);
-        statsAPI.addGlobalStat(player, "wins", 1);
     }
 
     public void recordGamesPlayed(Collection<Player> players) {
