@@ -207,12 +207,8 @@ public class SpleefListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onPlayerFallDamage(EntityDamageEvent event) {
+    public void onPlayerDamage(EntityDamageEvent event) {
         if (!(event.getEntity() instanceof Player player)) {
-            return;
-        }
-
-        if (event.getCause() != EntityDamageEvent.DamageCause.FALL) {
             return;
         }
 
@@ -223,6 +219,16 @@ public class SpleefListener implements Listener {
             return;
         }
 
+        if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
+            event.setCancelled(true);
+            return;
+        }
+
+        if (player.getHealth() - event.getFinalDamage() > 0) {
+            return;
+        }
+
         event.setCancelled(true);
+        gameManager.handlePlayerElimination(player);
     }
 }
